@@ -1,5 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QPushButton, QMainWindow, QVBoxLayout, QWidget, QFileDialog, QMessageBox
+from GUI.support import SupportWindow
 from GUI.style import CONST_MAIN_WINDOW
 
 def pop_window(title : str, text : str):
@@ -14,6 +15,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Перевод аудио в текст")
         self.setFixedSize(300, 300)
         self.setStyleSheet(CONST_MAIN_WINDOW)
+        self.start = None
         
         central_widget = QWidget()
         control_UI = QVBoxLayout()
@@ -32,7 +34,14 @@ class MainWindow(QMainWindow):
         
     def audio_selection(self):
         try:
-            file_filter = "Audio Files (*.mp3 *.wav *.aac *.flac *.ogg *.m4a)"
-            path = QFileDialog.getOpenFileName(self, "Выберите аудио", file_filter)
+            file_filter = "Audio Files (*.mp3 *.wav *.m4a)"
+            path = QFileDialog.getOpenFileName(self, "Выберите аудио","", file_filter)
         except:
             pop_window("Ошибка", "Ошибка открытия окна")
+            
+        print(path)
+        
+        #конвертация в нужный формат
+        #сохранение в перменную
+        self.start = SupportWindow()
+        
